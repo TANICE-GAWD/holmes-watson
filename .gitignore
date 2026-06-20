@@ -1,0 +1,5 @@
+node_modules/
+.env
+artifacts/*.png
+artifacts/*.log
+.env.example
