@@ -1,0 +1,9 @@
+{
+  "case_id": "internet_status_500",
+  "flow_id": "internet_status_codes",
+  "intent": "Follow the link to the 500 status code page and land on a working page.",
+  "step": "Click the '500' link and confirm the page loads normally",
+  "observed_behavior": "The server responded with HTTP 500 Internal Server Error and no usable content was returned.",
+  "agent_reasoning": "The response status is 500. A user following this link hits a server error.",
+  "dom_excerpt": "HTTP/1.1 500 Internal Server Error\n<body>... This page returned a 500 status code ...</body>"
+}

@@ -1,0 +1,18 @@
+{"case_id": "saucedemo_problem_images", "true_label": "real-bug", "note": "problem_user serves sl-404.jpg for every product image"}
+{"case_id": "saucedemo_problem_lastname", "true_label": "real-bug", "note": "problem_user last-name field rejects input, blocking checkout"}
+{"case_id": "saucedemo_visual_layout", "true_label": "real-bug", "note": "visual_user has genuinely broken header/button layout"}
+{"case_id": "saucedemo_sort_broken", "true_label": "real-bug", "note": "problem_user sort dropdown does not reorder the list"}
+{"case_id": "internet_broken_images", "true_label": "real-bug", "note": "two images 404 on /broken_images"}
+{"case_id": "internet_status_500", "true_label": "real-bug", "note": "endpoint returns HTTP 500"}
+{"case_id": "internet_status_404", "true_label": "real-bug", "note": "endpoint returns HTTP 404"}
+{"case_id": "internet_dynamic_loading", "true_label": "flaky", "note": "text appears after async delay; agent read too early"}
+{"case_id": "internet_dynamic_controls_enable", "true_label": "flaky", "note": "input enabled after delay; agent typed before it was ready"}
+{"case_id": "internet_dynamic_controls_remove", "true_label": "flaky", "note": "checkbox removed after delay; agent checked during the wait"}
+{"case_id": "internet_slow_resource", "true_label": "flaky", "note": "slow response; agent's wait was too short"}
+{"case_id": "internet_abtest_copy", "true_label": "flaky", "note": "A/B-tested heading varies between visits"}
+{"case_id": "saucedemo_checkout_copy", "true_label": "agent-misunderstanding", "note": "order succeeded; agent expected different confirmation wording"}
+{"case_id": "internet_login_secure_area", "true_label": "agent-misunderstanding", "note": "login succeeded to /secure; agent expected /dashboard"}
+{"case_id": "internet_login_flash", "true_label": "agent-misunderstanding", "note": "success banner misread as an error by its styling"}
+{"case_id": "internet_checkboxes_default", "true_label": "agent-misunderstanding", "note": "second checkbox checked by design; agent assumed both unchecked"}
+{"case_id": "internet_dropdown_placeholder", "true_label": "agent-misunderstanding", "note": "no-selection placeholder is the intended default state"}
+{"case_id": "saucedemo_sort_clean", "true_label": "agent-misunderstanding", "note": "sort worked correctly; agent misread the reorder as a fault"}

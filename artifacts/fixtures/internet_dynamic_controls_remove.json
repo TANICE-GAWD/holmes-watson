@@ -1,0 +1,9 @@
+{
+  "case_id": "internet_dynamic_controls_remove",
+  "flow_id": "internet_dynamic_controls",
+  "intent": "Remove the checkbox using the button and confirm it is gone.",
+  "step": "Confirm the checkbox is no longer present after clicking Remove",
+  "observed_behavior": "Immediately after clicking Remove the checkbox was still visible in the DOM while a 'Wait...' loading indicator was showing.",
+  "agent_reasoning": "The checkbox is still there after I asked to remove it, so the Remove button did not work.",
+  "dom_excerpt": "<div id=\"checkbox\"><input type=\"checkbox\"></div> <div id=\"loading\" style=\"display:block\">Wait...</div>"
+}
