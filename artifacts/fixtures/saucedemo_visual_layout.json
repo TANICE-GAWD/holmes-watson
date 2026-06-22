@@ -1,9 +1,0 @@
-{
-  "case_id": "saucedemo_visual_layout",
-  "flow_id": "saucedemo_visual_user",
-  "intent": "Log in as visual_user and view the inventory page laid out correctly.",
-  "step": "Confirm the inventory page renders with the cart icon in its normal position",
-  "observed_behavior": "The cart icon is shifted far to the right and overlaps the page edge; the 'Add to cart' button on the first item is misaligned and partially cut off.",
-  "agent_reasoning": "The header layout looks broken compared to the standard user view — elements overlap and are clipped.",
-  "dom_excerpt": "<div class=\"shopping_cart_container\" style=\"left: 320px\"> <a class=\"shopping_cart_link\">...</a></div>"
-}

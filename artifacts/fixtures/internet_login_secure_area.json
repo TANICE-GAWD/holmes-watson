@@ -1,9 +1,0 @@
-{
-  "case_id": "internet_login_secure_area",
-  "flow_id": "internet_login",
-  "intent": "Log into the secure area with valid credentials and confirm you reached the authenticated page.",
-  "step": "Confirm you reached the secure area after logging in",
-  "observed_behavior": "After submitting valid credentials the URL became /secure and the page showed 'Welcome to the Secure Area. When you are done click logout below.' I expected to land on a /dashboard URL.",
-  "agent_reasoning": "The URL is /secure, not /dashboard, so the login may not have gone to the right place.",
-  "dom_excerpt": "<div class=\"flash success\">You logged into a secure area!</div> <h2>Secure Area</h2>"
-}

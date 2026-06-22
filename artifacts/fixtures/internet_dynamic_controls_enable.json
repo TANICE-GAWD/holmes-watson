@@ -1,9 +1,0 @@
-{
-  "case_id": "internet_dynamic_controls_enable",
-  "flow_id": "internet_dynamic_controls",
-  "intent": "Enable the text input using the button, then type into it.",
-  "step": "Type into the input after clicking Enable",
-  "observed_behavior": "After clicking Enable, the input was still disabled when I tried to type, so the keystrokes did not register.",
-  "agent_reasoning": "The input rejected my text. It looks like typing into the field does nothing.",
-  "dom_excerpt": "<input type=\"text\" disabled=\"\"> <button onclick=\"swapInput()\">Enable</button> <div id=\"loading\">Wait...</div>"
-}

@@ -1,9 +1,0 @@
-{
-  "case_id": "internet_status_404",
-  "flow_id": "internet_status_codes",
-  "intent": "Follow the link to the 404 status code page and land on a working page.",
-  "step": "Click the '404' link and confirm the page loads normally",
-  "observed_behavior": "The server responded with HTTP 404 Not Found for the linked page.",
-  "agent_reasoning": "The response status is 404, so the destination the link points at does not exist.",
-  "dom_excerpt": "HTTP/1.1 404 Not Found\n<body>... This page returned a 404 status code ...</body>"
-}

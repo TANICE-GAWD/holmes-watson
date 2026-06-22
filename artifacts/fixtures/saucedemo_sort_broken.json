@@ -1,9 +1,0 @@
-{
-  "case_id": "saucedemo_sort_broken",
-  "flow_id": "saucedemo_problem_user",
-  "intent": "As problem_user, sort the catalogue by price low-to-high and see the items reorder accordingly.",
-  "step": "Select 'Price (low to high)' in the sort dropdown and verify the order changes",
-  "observed_behavior": "Selecting any option in the sort dropdown does not reorder the product list; the items stay in their original order.",
-  "agent_reasoning": "I changed the sort selection three times and the list never reordered. The sort control appears non-functional.",
-  "dom_excerpt": "<select class=\"product_sort_container\"><option value=\"lohi\">Price (low to high)</option></select>"
-}

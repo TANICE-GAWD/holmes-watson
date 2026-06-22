@@ -1,9 +1,0 @@
-{
-  "case_id": "internet_abtest_copy",
-  "flow_id": "internet_abtest",
-  "intent": "Open the A/B test page and read its main heading.",
-  "step": "Confirm the heading reads 'A/B Test Control'",
-  "observed_behavior": "The heading read 'A/B Test Variation 1' rather than 'A/B Test Control'; on an earlier visit it showed the control text.",
-  "agent_reasoning": "The heading text changed from what I saw before, so the page content is inconsistent.",
-  "dom_excerpt": "<h3>A/B Test Variation 1</h3> <p>Also known as split testing...</p>"
-}

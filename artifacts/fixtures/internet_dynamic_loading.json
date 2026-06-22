@@ -1,9 +1,0 @@
-{
-  "case_id": "internet_dynamic_loading",
-  "flow_id": "internet_dynamic_loading",
-  "intent": "Trigger the dynamic loading example and read the text that appears after the spinner finishes.",
-  "step": "Wait for the spinner to finish, then read the revealed text",
-  "observed_behavior": "After clicking Start, the spinner was visible and the '#finish' element was still empty when I read it; the expected text was not present.",
-  "agent_reasoning": "The element where the text should appear is empty, so the text is missing.",
-  "dom_excerpt": "<div id=\"loading\" style=\"display: block\"></div> <div id=\"finish\" style=\"display:none\"><h4></h4></div>"
-}

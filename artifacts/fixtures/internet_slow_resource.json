@@ -1,9 +1,0 @@
-{
-  "case_id": "internet_slow_resource",
-  "flow_id": "internet_slow",
-  "intent": "Open the page and confirm the main heading is visible.",
-  "step": "Read the page heading",
-  "observed_behavior": "The page took longer than my 3s wait to respond and I read the DOM before the heading element had rendered.",
-  "agent_reasoning": "No heading was present when I checked, so the page content seems to be missing.",
-  "dom_excerpt": "<body><!-- response still streaming --></body>"
-}

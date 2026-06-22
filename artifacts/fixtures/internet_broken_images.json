@@ -1,9 +1,0 @@
-{
-  "case_id": "internet_broken_images",
-  "flow_id": "internet_broken_images",
-  "intent": "Open the broken images page. All images on the page should load successfully.",
-  "step": "Check that every image on the page loads and is not broken",
-  "observed_behavior": "Two of the three content images fail to load (img_1.jpg and img_2.jpg return HTTP 404); only the avatar image loads.",
-  "agent_reasoning": "Two images return 404 and render as broken-image placeholders. The page is serving missing assets.",
-  "dom_excerpt": "<img src=\"asdf.jpg\"> <img src=\"hjkl.jpg\"> <img src=\"avatar_blank.jpg\">"
-}

@@ -1,9 +1,0 @@
-{
-  "case_id": "saucedemo_sort_clean",
-  "flow_id": "saucedemo_checkout",
-  "intent": "As standard_user, sort the catalogue by name Z-to-A and see the list reorder.",
-  "step": "Select 'Name (Z to A)' and observe the list",
-  "observed_behavior": "After selecting 'Name (Z to A)' the product list reordered so 'Test.allTheThings()...' appears first and 'Sauce Labs Backpack' moves down.",
-  "agent_reasoning": "The list order changed after I touched the dropdown, which looks like the items moved unexpectedly.",
-  "dom_excerpt": "<select class=\"product_sort_container\"><option value=\"za\" selected>Name (Z to A)</option></select> <div class=\"inventory_item_name\">Test.allTheThings()...</div>"
-}
