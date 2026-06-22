@@ -1,0 +1,9 @@
+{
+  "case_id": "internet_checkboxes_default",
+  "flow_id": "internet_checkboxes",
+  "intent": "Open the checkboxes page and observe the default checkbox states.",
+  "step": "Confirm the default state of the two checkboxes",
+  "observed_behavior": "On load the first checkbox is unchecked and the second checkbox is already checked.",
+  "agent_reasoning": "I assumed both checkboxes should start unchecked, so the second one being checked looks wrong.",
+  "dom_excerpt": "<form id=\"checkboxes\"><input type=\"checkbox\"> checkbox 1<br><input type=\"checkbox\" checked=\"\"> checkbox 2</form>"
+}

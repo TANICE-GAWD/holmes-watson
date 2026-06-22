@@ -1,0 +1,9 @@
+{
+  "case_id": "saucedemo_problem_lastname",
+  "flow_id": "saucedemo_problem_user",
+  "intent": "Log in as problem_user and browse the catalogue. Product images should load and checkout fields should accept input.",
+  "step": "Type a first and last name into the checkout form",
+  "observed_behavior": "The first name field accepts text, but the last name field clears itself on every keystroke and stays empty, so checkout cannot proceed.",
+  "agent_reasoning": "I typed 'Smith' into Last Name repeatedly and the value never persisted. The field appears to reject input.",
+  "dom_excerpt": "<input id=\"first-name\" value=\"Ada\"> <input id=\"last-name\" value=\"\"> <button id=\"continue\">Continue</button>"
+}

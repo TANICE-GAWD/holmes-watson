@@ -1,0 +1,9 @@
+{
+  "case_id": "saucedemo_problem_images",
+  "flow_id": "saucedemo_problem_user",
+  "intent": "Log in as problem_user and browse the catalogue. Product images should load and show the correct product.",
+  "step": "Check that each product thumbnail shows the correct product image",
+  "observed_behavior": "All six product thumbnails render the same image (a dog photo, sl-404.jpg) instead of the distinct product photos. The product names and prices are correct.",
+  "agent_reasoning": "Each product should have its own image. They are all identical and unrelated to the product, which looks like a broken asset mapping.",
+  "dom_excerpt": "<img class=\"inventory_item_img\" src=\"/static/media/sl-404.168b1cce.jpg\"> ... <img class=\"inventory_item_img\" src=\"/static/media/sl-404.168b1cce.jpg\">"
+}

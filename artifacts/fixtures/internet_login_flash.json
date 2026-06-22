@@ -1,0 +1,9 @@
+{
+  "case_id": "internet_login_flash",
+  "flow_id": "internet_login",
+  "intent": "Log into the secure area and confirm the success message is shown.",
+  "step": "Read the confirmation banner after logging in",
+  "observed_behavior": "A banner appeared with a coloured background and a small 'x' close icon, reading 'You logged into a secure area!'.",
+  "agent_reasoning": "The banner has an alert-style coloured background and a dismiss button, which often signals an error.",
+  "dom_excerpt": "<div class=\"flash success\">You logged into a secure area!<a href=\"#\" class=\"close\">x</a></div>"
+}

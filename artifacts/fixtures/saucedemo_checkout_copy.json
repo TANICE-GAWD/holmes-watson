@@ -1,0 +1,9 @@
+{
+  "case_id": "saucedemo_checkout_copy",
+  "flow_id": "saucedemo_checkout",
+  "intent": "Log in as standard_user and complete a checkout. The order should confirm.",
+  "step": "Click Finish and confirm the order success page appears",
+  "observed_behavior": "After Finish, the page showed a green checkmark and the text 'Thank you for your order!' with 'Your order has been dispatched...'. I expected the words 'Order Confirmed'.",
+  "agent_reasoning": "The confirmation wording does not match 'Order Confirmed', so I am not sure the order went through.",
+  "dom_excerpt": "<h2 class=\"complete-header\">Thank you for your order!</h2> <div class=\"complete-text\">Your order has been dispatched...</div>"
+}

@@ -1,0 +1,9 @@
+{
+  "case_id": "internet_dropdown_placeholder",
+  "flow_id": "internet_dropdown",
+  "intent": "Open the dropdown page where no option is selected by default.",
+  "step": "Read the dropdown's initial selection",
+  "observed_behavior": "The dropdown shows 'Please select an option' as a disabled placeholder and no real option is selected on load.",
+  "agent_reasoning": "Nothing is selected in the dropdown, which I read as a missing default value.",
+  "dom_excerpt": "<select id=\"dropdown\"><option value=\"\" disabled=\"\" selected=\"\">Please select an option</option><option value=\"1\">Option 1</option></select>"
+}
