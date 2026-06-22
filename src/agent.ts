@@ -16,7 +16,8 @@ const Action = z.object({
 type Action = z.infer<typeof Action>;
 
 const SYSTEM = `You drive a web browser to accomplish a user's intent, one step at a time.
-Given the intent, the current step, the page URL and a DOM excerpt, choose ONE action:
+Given the intent, the current step, the page URL, a screenshot of the page and a DOM excerpt, choose ONE action.
+Use the screenshot to judge what actually rendered — broken/missing images, error banners, layout problems the DOM text alone won't show.
 - click: target = visible text or a CSS selector
 - fill: target = a field's label/placeholder/selector, value = the text to type
 - goto: value = the url to open
@@ -25,9 +26,29 @@ Given the intent, the current step, the page URL and a DOM excerpt, choose ONE a
 
 Lean towards reporting a failure when something looks wrong; a separate judge filters out false alarms downstream.`;
 
-async function decide(flow: Flow, step: string, page: Page): Promise<Action> {
-  const dom = (await page.content()).slice(0, 6000);
-  const user = `Intent: ${flow.intent}\nCurrent step: ${step}\nURL: ${page.url()}\nDOM excerpt:\n${dom}`;
+// strippin most of HTML
+async function domExcerpt(page: Page, limit: number): Promise<string> {
+  const html = await page.content();
+  return html
+    .replace(/<head[\s\S]*?<\/head>/gi, '')
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/(src|href)="data:[^"]*"/gi, '$1="data:..."')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, limit);
+}
+
+async function decide(flow: Flow, step: string, page: Page, note?: string): Promise<Action> {
+  const dom = await domExcerpt(page, 6000);
+  let user = `Intent: ${flow.intent}\nCurrent step: ${step}\nURL: ${page.url()}\nDOM excerpt:\n${dom}`;
+  if (note) {
+    user += `\n\nYour previous action failed: ${note}\nReconsider against the DOM above: the step may already be satisfied (use "done"), or your target may have been wrong — try a different one. Only "fail" if the page genuinely cannot satisfy the step.`;
+  }
+  const image = await page
+    .screenshot()
+    .then((b) => b.toString('base64'))
+    .catch(() => undefined);
   return structured({
     model: agentModel,
     system: SYSTEM,
@@ -35,24 +56,30 @@ async function decide(flow: Flow, step: string, page: Page): Promise<Action> {
     schema: Action,
     toolName: 'act',
     toolDescription: 'Choose the next browser action for this step.',
+    image,
   });
 }
 
 
-// If real customer apps break it, this is where Stagehand would slot in.
+// Playwright needs the bracketed `[attr="val"]`. 
+export function asSelector(target: string): string {
+  return /^[\w-]+=(["']).*\1$/.test(target.trim()) ? `[${target.trim()}]` : target;
+}
+
+
 async function click(page: Page, target: string) {
   const byText = page.getByText(target, { exact: false }).first();
   if (await byText.count()) {
     return byText.click({ timeout: 5000 });
   }
-  return page.locator(target).first().click({ timeout: 5000 });
+  return page.locator(asSelector(target)).first().click({ timeout: 5000 });
 }
 
 async function fill(page: Page, target: string, value: string) {
   const candidates = [
     page.getByLabel(target),
     page.getByPlaceholder(target),
-    page.locator(target),
+    page.locator(asSelector(target)),
   ];
   for (const locator of candidates) {
     if (await locator.first().count()) {
@@ -96,7 +123,7 @@ async function emit(
     step,
     observed_behavior: observed,
     agent_reasoning: reasoning,
-    dom_excerpt: (await page.content()).slice(0, 2000),
+    dom_excerpt: await domExcerpt(page, 2000),
     screenshot_path,
   };
 }
@@ -104,11 +131,24 @@ async function emit(
 export async function runFlow(page: Page, flow: Flow): Promise<FailureReport[]> {
   mkdirSync('artifacts', { recursive: true });
   const reports: FailureReport[] = [];
-  await page.goto(flow.start_url, { waitUntil: 'domcontentloaded' });
+
+  try {
+    await page.goto(flow.start_url, { waitUntil: 'domcontentloaded', timeout: 20000 });
+  } catch (err) {
+    console.warn(`  could not open ${flow.start_url}: ${(err as Error).message.split('\n')[0]}`);
+    return reports;
+  }
 
   for (let i = 0; i < flow.steps.length; i++) {
     const step = flow.steps[i];
-    const action = await decide(flow, step, page);
+
+    let action: Action;
+    try {
+      action = await decide(flow, step, page);
+    } catch {
+      console.warn(`  step ${i} (${step}): no valid action from the model, skipping`);
+      continue;
+    }
 
     if (action.kind === 'done') {
       continue;
@@ -124,7 +164,26 @@ export async function runFlow(page: Page, flow: Flow): Promise<FailureReport[]> 
       await execute(page, action);
     } catch (err) {
       const message = `action "${action.kind}" failed: ${(err as Error).message}`;
-      reports.push(await emit(page, flow, i, step, message, action.thought));
+
+      let retry: Action | undefined;
+      try {
+        retry = await decide(flow, step, page, message);
+      } catch {
+        retry = undefined;
+      }
+      if (retry?.kind === 'done') continue;
+      if (retry && retry.kind !== 'fail') {
+        try {
+          await execute(page, retry);
+          continue;
+        } catch (err2) {
+          const m2 = `action "${retry.kind}" failed: ${(err2 as Error).message}`;
+          reports.push(await emit(page, flow, i, step, m2, retry.thought));
+          continue;
+        }
+      }
+      const observed = retry?.kind === 'fail' ? retry.observed ?? message : message;
+      reports.push(await emit(page, flow, i, step, observed, retry?.thought ?? action.thought));
     }
   }
   return reports;

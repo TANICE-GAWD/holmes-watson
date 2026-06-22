@@ -21,17 +21,26 @@ async function main() {
   }
 
   mkdirSync('artifacts/fixtures', { recursive: true });
-  const browser = await chromium.launch();
+  const headed = Boolean(process.env.HEADED);
+  const browser = await chromium.launch({
+    headless: !headed,
+    slowMo: headed ? 400 : 0,
+  });
   try {
     for (const flow of selected) {
       const page = await browser.newPage();
-      const reports = await runFlow(page, flow);
-      for (const report of reports) {
-        const path = join('artifacts/fixtures', `${report.case_id}.json`);
-        writeFileSync(path, JSON.stringify(report, null, 2));
+      try {
+        const reports = await runFlow(page, flow);
+        for (const report of reports) {
+          const path = join('artifacts/fixtures', `${report.case_id}.json`);
+          writeFileSync(path, JSON.stringify(report, null, 2));
+        }
+        console.log(`${flow.id}: ${reports.length} failure report(s)`);
+      } catch (err) {
+        console.error(`${flow.id}: run failed — ${(err as Error).message.split('\n')[0]}`);
+      } finally {
+        await page.close();
       }
-      console.log(`${flow.id}: ${reports.length} failure report(s)`);
-      await page.close();
     }
   } finally {
     await browser.close();
