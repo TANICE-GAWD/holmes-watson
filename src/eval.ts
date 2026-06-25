@@ -11,6 +11,7 @@ const REPORT_PATH = 'results/report.md';
 function loadLabels(): Map<string, LabeledCase> {
   const lines = readFileSync(LABELS_PATH, 'utf8')
     .split('\n')
+    
     .filter((line) => line.trim());
 
   const labels = new Map<string, LabeledCase>();
